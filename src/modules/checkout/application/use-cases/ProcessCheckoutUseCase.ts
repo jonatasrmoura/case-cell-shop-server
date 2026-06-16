@@ -14,7 +14,6 @@ export class ProcessCheckoutUseCase {
   ) {}
 
   async execute({ productId, quantity, idempotencyKey }: CheckoutRequest) {
-    // 1. Valida Idempotência
     const existingOrder =
       await this.orderRepository.findByIdempotencyKey(idempotencyKey);
     if (existingOrder) {
@@ -23,19 +22,16 @@ export class ProcessCheckoutUseCase {
       throw new Error("ORDER_ALREADY_PROCESSING");
     }
 
-    // 2. Cria pedido atrelado à baixa de estoque
     const order = await this.orderRepository.createOrderWithStockValidation({
       productId,
       quantity,
       idempotencyKey,
     });
 
-    // 3. Processa no ERP
     try {
       await this.erpService.processPayment(order.id);
       return { message: "Compra realizada com sucesso!", orderId: order.id };
     } catch (error) {
-      // 4. Ação compensatória (Rollback) em caso de falha no ERP
       await this.orderRepository.updateOrderStatusAndStock(
         order.id,
         productId,

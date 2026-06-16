@@ -31,7 +31,7 @@ export class PrismaOrderRepository implements IOrderRepository {
           productId: data.productId,
           quantity: data.quantity,
           idempotencyKey: data.idempotencyKey,
-          status: "SUCCESS", // Estado otimista
+          status: "SUCCESS",
         },
       });
     });
@@ -46,7 +46,7 @@ export class PrismaOrderRepository implements IOrderRepository {
     await prisma.$transaction([
       prisma.product.update({
         where: { id: productId },
-        data: { stock: { increment: quantity } }, // Devolve o estoque
+        data: { stock: { increment: quantity } },
       }),
       prisma.order.update({
         where: { id: orderId },
