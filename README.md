@@ -1,4 +1,4 @@
-# 🛒 CaseCellShop - API (Back-end)
+# 🛒 CaseCellShop Server - API (Back-end)
 
 Este repositório contém a solução de back-end para o desafio técnico **CaseCellShop** (Nível Pleno). A API foi desenvolvida com foco em resiliência, consistência de dados em ambientes de alta concorrência e arquitetura escalável.
 
@@ -78,4 +78,3 @@ Pensando em um ambiente produtivo de alta escala, as próximas iterações deste
 [3]. Observabilidade: Implementação de logs estruturados (Pino) com Trace IDs atrelados a ferramentas como Datadog/Sentry para monitoramento ativo das falhas do ERP.
 
 [4]. Documentação: Integração com Swagger/OpenAPI para expor os contratos do front-end dinamicamente.
-# case-cell-shop-server

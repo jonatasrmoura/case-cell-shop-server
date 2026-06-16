@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Product {
+  id    String @id @default(uuid())
+  name  String
+  price Float
+  stock Int
+
+  orders Order[]
+}
+
+model Order {
+  id             String @id @default(uuid())
+  productId      String
+  quantity       Int
+  status         String
+  idempotencyKey String @unique // Garante que não teremos pedidos duplicados
+
+  product Product @relation(fields: [productId], references: [id])
+}
